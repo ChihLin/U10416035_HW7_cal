@@ -21,9 +21,14 @@ import javafx.scene.layout.HBox;
 import javafx.geometry.Pos;
 
 public class Calculation extends Application {
+	
+	
+	//String str1 , str2;
+	boolean[] p = new boolean[4];
+	double num1 , num2;
 
 	@Override // Override the start method in the Application class
-	public void start(Stage primaryStage) {
+	public void start(Stage primaryStage) {	
 		
 		FlowPane pane = new FlowPane();
 		FlowPane p1 = new FlowPane();
@@ -103,10 +108,8 @@ public class Calculation extends Application {
 
 		//add the text board
 		p1.getChildren().addAll(result);
-		
-		
 
-    //decide the button 's seat
+		//decide the button 's seat
 		p2.add(btmc , 0,0);
 		p2.add(btmr , 1,0);
 		p2.add(btms , 2,0);
@@ -139,7 +142,6 @@ public class Calculation extends Application {
 		p2.add(btzero , 0,5,2 ,1);
 		p2.add(btpoint , 2,5);
 		p2.add(btd ,3,5);
-		//p2.getChildren().addAll(btpoint, btd);
 		p2.add(bte , 4 , 4 ,1 ,2);
 		
 		
@@ -170,7 +172,7 @@ public class Calculation extends Application {
 			result.setText(result.getText() + "7");
 		});
 		bteight.setOnAction(e ->{
-				result.setText(result.getText() + "8");
+			result.setText(result.getText() + "8");
 		});
 		btnine.setOnAction(e -> {
 			result.setText(result.getText() + "9");
@@ -180,7 +182,7 @@ public class Calculation extends Application {
 			result.setText(result.getText() + "4");
 		});
 		btfive.setOnAction(e ->{
-				result.setText(result.getText() + "5");
+			result.setText(result.getText() + "5");
 		});
 		btsix.setOnAction(e -> {
 			result.setText(result.getText() + "6");
@@ -202,9 +204,99 @@ public class Calculation extends Application {
 		
 		//delete all the number 
 		btc.setOnAction(e -> {
-			result.setText("");
+			result.clear();
 		});
 		
+		//button delete 
+		btf.setOnAction(e -> {
+			String s;
+			s = result.getText();
+			String s2 = s.substring(0, (s.length()-1));
+			result.setText(s2);
+		});
+		//button point(.)
+		btpoint.setOnAction(e -> {
+			
+			result.setText(result.getText() + ".");
+		});
+		
+		//plus
+		btd.setOnAction(e -> {
+			
+			num1 = Double.parseDouble(result.getText());
+			result.clear();
+			
+			p[0] =true;
+			p[1] = false;
+			p[2] = false;
+			p[3] = false;
+			
+		});
+		
+		// "-" 
+		btccc.setOnAction(e -> {
+			
+			num1 = Double.parseDouble(result.getText());
+			result.clear();
+			
+			p[0] = false;
+			p[1] = true;
+			p[2] = false;
+			p[3] = false;
+			
+		});
+		
+		// *
+		btb.setOnAction(e -> {
+			
+			num1 = Double.parseDouble(result.getText());
+			result.clear();
+			
+			p[0] = false;
+			p[1] = false;
+			p[2] = true;
+			p[3] = false;
+			
+		});
+		
+		// "/"
+		bta.setOnAction(e -> {
+			
+			num1 = Double.parseDouble(result.getText());
+			result.clear();
+			
+			p[0] = false;
+			p[1] = false;
+			p[2] = false;
+			p[3] = true;
+			
+		});
+		
+		//button " = "
+		bte.setOnAction(e -> {
+			
+			num2 = Double.parseDouble(result.getText());
+			
+			if(p[0] == true){
+				 num1 = num1 + num2;
+				 result.setText(Double.toString(num1));
+			}
+			
+			else if (p[1] == true){
+				num1 = num1 - num2;
+				result.setText(Double.toString(num1));
+			}
+			else if (p[2] == true){
+				num1 = num1 * num2;
+				result.setText(Double.toString(num1));
+			}
+			else if (p[3] == true){
+				num1 = num1 / num2;
+				result.setText(Double.toString(num1));
+			}
+			
+		});
+	
 		
 		// Create a scene and place it in the stage
 		Scene scene = new Scene(pane, 260, 360);
